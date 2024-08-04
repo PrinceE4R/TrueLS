@@ -148,6 +148,16 @@
                     playRandomMusic();
                 }
             });
+
+            // Listen for messages from the iframe
+            window.addEventListener('message', function(event) {
+                // Check the origin of the message for security
+                if (event.origin === window.location.origin) {
+                    if (event.data && event.data.action === 'navigate') {
+                        window.location.href = event.data.url;
+                    }
+                }
+            });
         };
     </script>
 </body>
