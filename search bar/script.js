@@ -48,6 +48,7 @@ function hideSuggestions() {
     }, 300); // This should match the transition duration
     selectedIndex = -1;
 }
+
 function isUrlOrWebsite(input) {
     // Check for common URL patterns
     const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
@@ -67,10 +68,12 @@ function performSearch() {
             url = 'https://' + url;
         }
         console.log(`Opening URL: ${url}`);
-        window.open(url, '_blank');
+        // Send the URL to the parent window
+        window.parent.postMessage({ action: 'navigate', url: url }, '*');
     } else {
         console.log(`Searching for: ${query}`);
-        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+        // Send the search URL to the parent window
+        window.parent.postMessage({ action: 'navigate', url: `https://www.google.com/search?q=${encodeURIComponent(query)}` }, '*');
     }
     
     // Clear the input field
