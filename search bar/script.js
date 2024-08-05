@@ -7,7 +7,7 @@ const searchInput = document.getElementById('search-input');
 const websites = [
   { name: 'Google', url: 'https://www.google.in', icon: './logos/google.svg' },
   { name: 'YouTube', url: 'https://www.youtube.com', icon: './logos/youtube.svg' },
-  { name: 'Youtube Music', url: 'https://www.music.youtube.com', icon: './logos/youtubemusic.svg' },
+  { name: 'Youtube Music', url: 'https://music.youtube.com', icon: './logos/youtubemusic.svg' },
   { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './logos/chatgpt.svg' },
   { name: 'Bing', url: 'https://www.bing.com', icon: './logos/bing.svg' },
   { name: 'Claude', url: 'https://www.claude.ai', icon: './logos/claude.svg' },
@@ -32,8 +32,12 @@ function cycleWebsite(direction) {
 }
 
 websiteButton.addEventListener('click', () => {
-  window.open(websites[currentWebsiteIndex].url, '_blank');
+  const website = websites[currentWebsiteIndex];
+  console.log(`Navigating to: ${website.url}`);
+  // Send the website URL to the parent window
+  window.parent.postMessage({ action: 'navigate', url: website.url }, '*');
 });
+
 
 document.addEventListener('keydown', (e) => {
   if (document.activeElement !== searchInput) {
@@ -117,21 +121,26 @@ function isUrlOrWebsite(input) {
 }
 
 function performSearch() {
-    const query = searchInput.value.trim();
-    
-    if (isUrlOrWebsite(query)) {
+  const query = searchInput.value.trim();
+  
+  if (isUrlOrWebsite(query)) {
       let url = query;
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
+          url = 'https://' + url;
       }
-      window.open(url, '_blank');
-    } else {
-      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-    }
-    
-    searchInput.value = '';
-    hideSuggestions();
-  }
+      console.log(`Opening URL: ${url}`);
+      // Send the URL to the parent window
+      window.parent.postMessage({ action: 'navigate', url: url }, '*');
+  } else {
+      console.log(`Searching for: ${query}`);
+      // Send the search URL to the parent window
+      window.parent.postMessage({ action: 'navigate', url: `https://www.google.com/search?q=${encodeURIComponent(query)}` }, '*');
+  } 
+  
+  searchInput.value = '';
+  hideSuggestions();
+}
+
 
 searchInput.addEventListener('input', function() {
     const query = this.value.trim();
