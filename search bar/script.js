@@ -5,17 +5,17 @@ const websiteIcon = document.getElementById('website-icon');
 const searchInput = document.getElementById('search-input');
 
 const websites = [
-  { name: 'Google', url: 'https://www.google.in', icon: './Logos/google.svg' },
-  { name: 'YouTube', url: 'https://www.youtube.com', icon: './Logos/youtube.svg' },
-  { name: 'Youtube Music', url: 'https://www.music.youtube.com', icon: './Logos/youtubemusic.svg' },
-  { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './Logos/chatgpt.svg' },
-  { name: 'Bing', url: 'https://www.bing.com', icon: './Logos/bing.svg' },
-  { name: 'Claude', url: 'https://www.claude.ai', icon: './Logos/claude.svg' },
-  { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './Logos/desmos.svg' },
-  { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './Logos/pw.svg' },
-  { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './Logos/perplexity.svg' },
-  { name: 'Duck Duck Go', url: 'https://duckduckgo.com', icon: './Logos/duckduckgo.svg' },
-  { name: 'Brave', url: 'https://search.brave.com', icon: './Logos/brave.svg' }
+  { name: 'Google', url: 'https://www.google.in', icon: './logos/google.svg' },
+  { name: 'YouTube', url: 'https://www.youtube.com', icon: './logos/youtube.svg' },
+  { name: 'Youtube Music', url: 'https://www.music.youtube.com', icon: './logos/youtubemusic.svg' },
+  { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './logos/chatgpt.svg' },
+  { name: 'Bing', url: 'https://www.bing.com', icon: './logos/bing.svg' },
+  { name: 'Claude', url: 'https://www.claude.ai', icon: './logos/claude.svg' },
+  { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './logos/desmos.svg' },
+  { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './logos/pw.svg' },
+  { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './logos/perplexity.svg' },
+  { name: 'Duck Duck Go', url: 'https://duckduckgo.com', icon: './logos/duckduckgo.svg' },
+  { name: 'Brave', url: 'https://search.brave.com', icon: './logos/brave.svg' },
 ];
 
 let currentWebsiteIndex = 0;
