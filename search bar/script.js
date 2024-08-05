@@ -1,6 +1,63 @@
-const searchInput = document.getElementById('search-input');
 const suggestionsContainer = document.getElementById('suggestions-container');
 const searchButton = document.getElementById('search-button');
+const websiteButton = document.getElementById('website-button');
+const websiteIcon = document.getElementById('website-icon');
+const searchInput = document.getElementById('search-input');
+
+const websites = [
+  { name: 'Google', url: 'https://www.google.in', icon: './Logos/google.svg' },
+  { name: 'YouTube', url: 'https://www.youtube.com', icon: './Logos/youtube.svg' },
+  { name: 'Youtube Music', url: 'https://www.music.youtube.com', icon: './Logos/youtubemusic.svg' },
+  { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './Logos/chatgpt.svg' },
+  { name: 'Bing', url: 'https://www.bing.com', icon: './Logos/bing.svg' },
+  { name: 'Claude', url: 'https://www.claude.ai', icon: './Logos/claude.svg' },
+  { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './Logos/desmos.svg' },
+  { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './Logos/pw.svg' },
+  { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './Logos/perplexity.svg' },
+  { name: 'Duck Duck Go', url: 'https://duckduckgo.com', icon: './Logos/duckduckgo.svg' },
+  { name: 'Brave', url: 'https://search.brave.com', icon: './Logos/brave.svg' }
+];
+
+let currentWebsiteIndex = 0;
+
+function updateWebsiteButton() {
+  const website = websites[currentWebsiteIndex];
+  websiteIcon.src = website.icon;
+  websiteIcon.alt = website.name;
+}
+
+function cycleWebsite(direction) {
+  currentWebsiteIndex = (currentWebsiteIndex + direction + websites.length) % websites.length;
+  updateWebsiteButton();
+}
+
+websiteButton.addEventListener('click', () => {
+  window.open(websites[currentWebsiteIndex].url, '_blank');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (document.activeElement !== searchInput) {
+    if (e.key === 'ArrowUp') {
+      cycleWebsite(-1);
+      e.preventDefault();
+    } else if (e.key === 'ArrowDown') {
+      cycleWebsite(1);
+      e.preventDefault();
+    }
+  }
+});
+
+websiteButton.addEventListener('wheel', (e) => {
+  if (e.deltaY < 0) {
+    cycleWebsite(-1);
+  } else {
+    cycleWebsite(1);
+  }
+  e.preventDefault();
+});
+
+// Initialize the button
+updateWebsiteButton();
 
 let selectedIndex = -1;
 
@@ -63,25 +120,18 @@ function performSearch() {
     const query = searchInput.value.trim();
     
     if (isUrlOrWebsite(query)) {
-        let url = query;
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = 'https://' + url;
-        }
-        console.log(`Opening URL: ${url}`);
-        // Send the URL to the parent window
-        window.parent.postMessage({ action: 'navigate', url: url }, '*');
+      let url = query;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      window.open(url, '_blank');
     } else {
-        console.log(`Searching for: ${query}`);
-        // Send the search URL to the parent window
-        window.parent.postMessage({ action: 'navigate', url: `https://www.google.com/search?q=${encodeURIComponent(query)}` }, '*');
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
     }
     
-    // Clear the input field
     searchInput.value = '';
-    
-    // Hide suggestions
     hideSuggestions();
-}
+  }
 
 searchInput.addEventListener('input', function() {
     const query = this.value.trim();
