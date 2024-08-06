@@ -9,14 +9,19 @@ const websites = [
   { name: 'YouTube', url: 'https://www.youtube.com', icon: './logos/youtube.svg' },
   { name: 'Youtube Music', url: 'https://music.youtube.com', icon: './logos/youtubemusic.svg' },
   { name: 'ChatGPT', url: 'https://www.chatgpt.com', icon: './logos/chatgpt.svg' },
-  { name: 'Bing', url: 'https://www.bing.com', icon: './logos/bing.svg' },
+  { name: 'Google Drive', url: 'https://drive.google.com/', icon: './logos/googledrive.svg' },
+  { name: 'Google Meet', url: 'https://meet.google.com', icon: './logos/googlemeet.svg' },
   { name: 'Claude', url: 'https://www.claude.ai', icon: './logos/claude.svg' },
   { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './logos/desmos.svg' },
   { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './logos/pw.svg' },
   { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './logos/perplexity.svg' },
+  { name: 'Gmail', url: 'https://mail.google.com/', icon: './logos/googlemail.svg' },
+  { name: 'Bing', url: 'https://www.bing.com', icon: './logos/bing.svg' },
   { name: 'Duck Duck Go', url: 'https://duckduckgo.com', icon: './logos/duckduckgo.svg' },
   { name: 'Brave', url: 'https://search.brave.com', icon: './logos/brave.svg' },
 ];
+let touchStartY = 0;
+let touchEndY = 0;
 
 let currentWebsiteIndex = 0;
 
@@ -26,9 +31,39 @@ function updateWebsiteButton() {
   websiteIcon.alt = website.name;
 }
 
+function handleTouchStart(event) {
+    touchStartY = event.touches[0].clientY;
+}
+
+function handleTouchMove(event) {
+    event.preventDefault(); // Prevent scrolling
+}
+
+function handleTouchEnd(event) {
+    touchEndY = event.changedTouches[0].clientY;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const swipeThreshold = 10; // Minimum distance to be considered a swipe
+    if (touchStartY - touchEndY > swipeThreshold) {
+        // Swipe up
+        cycleWebsite(1);
+    } else if (touchEndY - touchStartY > swipeThreshold) {
+        // Swipe down
+        cycleWebsite(-1);
+    }
+}
+
 function cycleWebsite(direction) {
-  currentWebsiteIndex = (currentWebsiteIndex + direction + websites.length) % websites.length;
-  updateWebsiteButton();
+    currentWebsiteIndex = (currentWebsiteIndex + direction + websites.length) % websites.length;
+    updateWebsiteButton();
+    
+    // Add a brief scaling animation for feedback
+    websiteButton.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+        websiteButton.style.transform = 'scale(1)';
+    }, 200);
 }
 
 websiteButton.addEventListener('click', () => {
@@ -37,6 +72,10 @@ websiteButton.addEventListener('click', () => {
   // Send the website URL to the parent window
   window.parent.postMessage({ action: 'navigate', url: website.url }, '*');
 });
+
+websiteButton.addEventListener('touchstart', handleTouchStart, false);
+websiteButton.addEventListener('touchmove', handleTouchMove, false);
+websiteButton.addEventListener('touchend', handleTouchEnd, false);
 
 
 document.addEventListener('keydown', (e) => {

@@ -1,8 +1,8 @@
 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <circle cx="30" cy="30" r="30" fill="#00752D"/>
 <g style="mix-blend-mode:screen">
-<rect x="16.5" y="15.5" width="29" height="29" rx="4.5" fill="url(#pattern0_153_268)"/>
-<rect x="16.5" y="15.5" width="29" height="29" rx="4.5" stroke="white"/>
+<rect x="16.5" y="15.5" width="29" height="29" rx="6.5" fill="url(#pattern0_153_268)"/>
+<rect x="16.5" y="15.5" width="29" height="29" rx="6.5" stroke="white"/>
 </g>
 <defs>
 <pattern id="pattern0_153_268" patternContentUnits="objectBoundingBox" width="1" height="1">
