@@ -13,6 +13,7 @@ const websites = [
   { name: 'Google Meet', url: 'https://meet.google.com', icon: './logos/googlemeet.svg' },
   { name: 'Claude', url: 'https://www.claude.ai', icon: './logos/claude.svg' },
   { name: 'Meta', url: 'https://www.meta.ai', icon: './logos/meta.svg' },
+  { name: 'Mistral', url: 'https://chat.mistral.ai/chat', icon: './logos/mistral.svg' },
   { name: 'Desmos', url: 'https://www.desmos.com/calculator', icon: './logos/desmos.svg' },
   { name: 'Physics Wallah', url: 'https://www.pw.live', icon: './logos/pw.svg' },
   { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: './logos/perplexity.svg' },
